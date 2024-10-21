@@ -1,5 +1,5 @@
-// lib/screens/cultivo_screen.dart
 import 'package:flutter/material.dart';
+import 'detalle_ciclo_screen.dart'; // Importa la nueva pantalla
 
 class CultivoScreen extends StatefulWidget {
   const CultivoScreen({super.key});
@@ -48,6 +48,15 @@ class _CultivoScreenState extends State<CultivoScreen> {
     );
   }
 
+  void _verDetallesCiclo(Ciclo ciclo) {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => DetalleCicloScreen(ciclo: ciclo),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -58,7 +67,7 @@ class _CultivoScreenState extends State<CultivoScreen> {
         padding: const EdgeInsets.all(8.0),
         child: GridView.builder(
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 6, // Dos columnas en el Grid
+            crossAxisCount: 6,
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
           ),
@@ -66,14 +75,17 @@ class _CultivoScreenState extends State<CultivoScreen> {
           itemBuilder: (context, index) {
             if (index < ciclos.length) {
               final ciclo = ciclos[index];
-              return Card(
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      const Icon(Icons.calendar_today, size: 50),
-                      Text(ciclo.nombre),
-                    ],
+              return GestureDetector(
+                onTap: () => _verDetallesCiclo(ciclo), // Navega a la pantalla de detalles
+                child: Card(
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Icon(Icons.calendar_today, size: 50),
+                        Text(ciclo.nombre),
+                      ],
+                    ),
                   ),
                 ),
               );
